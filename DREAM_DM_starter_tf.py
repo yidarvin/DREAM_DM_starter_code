@@ -462,7 +462,7 @@ def test_out(sess, list_dims, list_placeholders, list_operations, X_te, opts):
     dataXX = np.zeros((1, matrix_size, matrix_size, num_channels), dtype=np.float32)
     # Running through the images.
     f = open(opts.outtxt, 'w')
-    statement = 'subjectID' + '\t' + 'laterality' + '\t' + 'prediction'
+    statement = 'subjectID' + '\t' + 'laterality' + '\t' + 'confidence'
     super_print(statement, f)
     for iter_data in range(len(X_te)):
         id_iter, lat_iter, img_iter = X_te[iter_data]
