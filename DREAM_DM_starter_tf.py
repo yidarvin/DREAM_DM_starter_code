@@ -86,8 +86,14 @@ def create_data_splits(path_csv_crosswalk, path_csv_metadata):
             if counter == 0:
                 counter += 1
                 continue
-            dict_tuple_to_cancer[(row[0].strip(), 'L')] = int(row[3])
-            dict_tuple_to_cancer[(row[0].strip(), 'R')] = int(row[4])
+            cancerL = row[3]
+            cancerR = row[4]
+            if cancerL == '.':
+                cancerL = '0'
+            if cancerR == '.':
+                cancerR = '0'
+            dict_tuple_to_cancer[(row[0].strip(), 'L')] = int(cancerL)
+            dict_tuple_to_cancer[(row[0].strip(), 'R')] = int(cancerR)
     # Alright, now, let's connect those dictionaries together...
     X_tot = []
     Y_tot = []
