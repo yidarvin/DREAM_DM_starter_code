@@ -170,11 +170,12 @@ def conv2d(l_input, filt_size, filt_num, stride=1, alpha=0.1, name="conv2d", nor
         W = tf.get_variable("W", weight_shape, initializer=tf.random_normal_initializer(stddev=std))
     tf.add_to_collection("reg_variables", W)
     conv_layer = tf.nn.conv2d(l_input, W, strides=[1, stride, stride, 1], padding='SAME')
+    norm_layer = conv_layer
     # Normalization
-    if norm=="bn":
-        norm_layer = tflearn.layers.normalization.batch_normalization(conv_layer, name=(name+"_batch_norm"), decay=0.9)
-    elif norm=="lrn":
-        norm_layer = tflearn.layers.normalization.local_response_normalization(conv_layer)
+    #if norm=="bn":
+    #    norm_layer = tflearn.layers.normalization.batch_normalization(conv_layer, name=(name+"_batch_norm"), decay=0.9)
+    #elif norm=="lrn":
+    #    norm_layer = tflearn.layers.normalization.local_response_normalization(conv_layer)
     # ReLU
     relu_layer = tf.maximum(norm_layer, norm_layer*alpha)
     return relu_layer    
@@ -236,8 +237,9 @@ def dense(l_input, hidden_size, keep_prob, alpha=0.1, name="dense"):
         W = tf.get_variable("W", weight_shape, initializer=tf.random_normal_initializer(stddev=std))
     tf.add_to_collection("reg_variables", W)
     affine_layer = tf.matmul(reshape_layer, W)
+    norm_layer = affine_layer
     # Batch Normalization
-    norm_layer = tflearn.layers.normalization.batch_normalization(affine_layer, name=(name+"_batch_norm"), decay=0.9)
+    #norm_layer = tflearn.layers.normalization.batch_normalization(affine_layer, name=(name+"_batch_norm"), decay=0.9)
     # Dropout
     dropout_layer = tf.nn.dropout(norm_layer, keep_prob)
     # ReLU
